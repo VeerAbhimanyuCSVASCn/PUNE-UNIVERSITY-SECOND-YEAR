@@ -1,0 +1,179 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<iostream.h>
+
+class weather
+{
+int high,low,snow,rain;
+
+ public:
+   friend void avg(weather *k[]);
+
+   void displayed()
+   { cout<<"\nenter the HIGHEST TEMPREATURE - ";
+ cout<<high;
+ cout<<"\nenter the lowest tempreature - ";
+ cout<<low;
+ cout<<"\nenter the amount of snow fall - ";
+ cout<<snow;
+ cout<<"\nenter the amount of rain fall - ";
+ cout<<rain;
+ }
+
+
+ void input()
+ {
+ cout<<"\nenter the HIGHEST TEMPREATURE - ";
+ cin>>high;
+ cout<<"\nenter the lowest tempreature - ";
+ cin>>low;
+ cout<<"\nenter the amount of snow fall - ";
+ cin>>snow;
+ cout<<"\nenter the amount of rain fall - ";
+ cin>>rain;
+ }
+
+ weather(void)
+  {     high=0;
+	low=0;
+	snow=0;
+	rain=0;
+
+   }
+
+      ~weather()
+      {
+       cout<<"deleted SUCCESS-FULLY";
+      }
+
+
+};
+
+
+
+  weather *a[30];
+  int b=0;
+
+  int create(void)
+  {
+	if(b==29)
+	 {cout<<" SORRY! RECORD OVERFLOW " ;
+	  return 0;}
+
+	else
+	{
+	 a[b]=new weather;
+	 a[b]->input();
+	 ++b;
+	 }
+	 return 0;
+   }
+
+
+   int modify()
+   {  int g;
+   clrscr();
+   cout<<"enter the date of modfiction - ";
+   cin>>g;
+   a[g-1]->input();
+   return 0;
+   }
+
+
+
+   int deletes()
+   {
+	  if(b==0)
+	 { cout<<"UNDERFLOW! NO FURTHER DELETE poSSIBLE ";
+	  getch();
+	  return 0;}
+   int g;
+   cout<<"enter the date of delete - ";
+   cin>>g;
+   if(g>b)
+   {cout<<" data filled upto date"<<b+1; }
+   for(int i=g-1;i<b-1;i++)
+   a[i]=a[i+1];
+   delete a[b-1];
+   --b;
+   return 0;
+   }
+
+
+
+     void display()
+     {
+      cout<<"\nenter date to display particular record else enter 100 for all";
+      int t;
+      cin>>t;
+      if(t==100)
+      {
+      for(int i=0;i<b;i++)
+      {   cout<<endl<<"DATE - "<<i+1;
+      a[i]->displayed();
+      }
+      }
+      else
+      a[t-1]->displayed();
+     }
+
+      void avg(weather *k[])
+      {      float e=0,f=0,g=0,h=0;
+      for(int i=0;i<b;i++)
+      {       e=e+k[i]->high;
+	       f=f+k[i]->low;
+	       g=g+k[i]->snow;
+	       h=h+k[i]->rain;
+      }
+      cout<<endl<<endl<<"the average of high tempreature - "<<e;
+      cout<<endl<<"the average of low tempreature - "<<f;
+      cout<<endl<<"the average of snow fall - "<<g;
+      cout<<endl<<"the average of rain fall - "<<h;
+
+		getch();
+
+
+      }
+
+void main()
+{          ab:
+	  clrscr();
+	     gotoxy(5,35);
+
+	     cout<<"MENU\n" ;
+	     cout<<"PRESS 1 to create new record    ";
+	     cout<<"\nPRESS 2 to modify the record  ";
+	     cout<<"\nPRESS 3 to DELETE record      ";
+	     cout<<"\nPRESS 4 to find average       ";
+	     cout<<"\nPRESS 5 to DISPLAY RECORD     ";
+	     cout<<"\n\n..::ENTER ANY OTHER NUMBER TO EXIT::.." ;
+	      int c;
+	      cin>>c;
+	      switch(c)
+	      {
+	      case 1:
+	      create();
+	      clrscr();
+	      goto ab;
+
+	      case 2:
+	      modify();
+	      clrscr();
+	      goto ab;
+
+	      case 3:
+	      deletes();
+		 goto ab;
+
+	      case 4:
+	      avg(a);
+		 goto ab;
+
+	      case 5:
+	      display();
+	      getch();
+		 goto ab;
+
+	      }
+}

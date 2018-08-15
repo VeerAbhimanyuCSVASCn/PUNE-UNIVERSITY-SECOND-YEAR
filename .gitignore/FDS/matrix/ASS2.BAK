@@ -1,0 +1,187 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+
+int ** create(int a,int g);
+
+
+void addition(int **a,int **b,int c,int d,int e,int f)
+{
+int i,j;
+if(c==e&&d==f)
+{
+for( i=0;i<c;i++)
+{  printf("\n");
+for( j=0;j<d;j++)
+{printf(" %d",*(a[i]+j)+*(b[i]+j));
+}}}
+else
+printf("..::SORRY! NO ADDITION POSSIBLE ::..");
+}
+
+
+int multi(int **a,int **b,int c,int d,int e,int f)
+{
+
+   int i,j,temp,k,abg=0;
+
+
+   if(e!=d)
+   {
+   printf("SORRY! no multiplication possible : ");
+   }
+
+
+   for(i=0;i<c;i++)
+   {
+   printf("\n");
+   for(j=0;j<d;j++)
+   {  abg=0;
+
+   for(k=0;k<f;k++)
+
+   {    abg=abg+ ((*(a[i]+k)) * (*(b[k]+j)));
+
+   }
+
+   printf("%d ",abg);;
+   }
+
+   }
+ return 0;
+}
+
+
+
+
+int ** create(int a,int g)
+
+{
+int **b,i,q,p;
+b=(int ** )malloc(a*sizeof(int*));
+for( i=0;i<g;i++)
+ b[i]=(int *)malloc(g*sizeof(int));
+  clrscr();
+ printf("NOW ENTER THE DATA - \n\t\t");
+
+ for( q=0;q<a;q++)
+ {
+ for( p=0;p<g;p++)
+ {
+ scanf("%d",b[q]+p );
+ }
+ }
+ return b;
+}
+
+
+
+
+void transpose(int **a,int d,int e)
+  {    int i,j,temp;
+	 for( i=0;i<d;i++)
+	 {
+	 for(j=i;j<e;j++)
+	 {  temp=*(a[i]+j);
+	 *(a[i]+j)=*(a[j]+i);
+	 *(a[j]+i)=temp;
+	 }
+	 }
+
+	  for( i=0;i<d;i++)
+	 {      printf("\n");
+	 for(j=0;j<e;j++)
+	 {
+	 printf("%d ",*(a[i]+j));
+	 }
+	 }
+  }
+
+
+
+   int smallest (int *p,int e)
+   { int k=p[0],l=0,i;
+   for( i=0;i<e;i++)
+   if(k>p[i])
+   {k=p[i]; l=i;}
+   return l;
+   }
+
+
+   void largest( int **a,int d,int e)
+   {         int large=a[0][e],i;
+
+   for( i=0;i<d;i++)
+   if(a[i][e]>large)
+   large=a[i][e];
+   printf("%d",large);
+   }
+
+
+
+int saddle(int **a,int d,int e)
+{
+   int *p,r,i;
+   p=a[0];
+   r = smallest(p,e);
+
+   for(i=1;i<d;i++)
+   {
+	p=a[i];
+
+	if(r!=smallest(p,e))
+	{
+	printf(" saddle point not exist ") ;
+	return 0;
+	}
+   }
+
+    largest(a,d,r);
+
+    return 0;
+
+}
+
+
+
+
+void main()
+{      char a;
+       int **b,**c,f,g,d,e;
+
+       gotoxy(40,3);
+printf("MENU\n\n\n1. PRESS 1 for ADDITION\n2. PRESS for MULTIPLICATION\n3. TRANSPOSE\n4. SADDLE");
+printf("\n\n\n\t\tNOW ENTER YOUR CHOICE : ");
+a=getch();
+
+
+clrscr();
+   printf("enter the size of first matrix ");
+   scanf("%d%d",&d,&e);
+   b=create(d,e);
+   clrscr();
+
+   if(a<'3')
+   {
+   printf("enter the size of second matrix ");
+   scanf("%d%d",&f,&g);
+   c=create(f,g);
+   }
+
+switch(a)
+{
+   case '1':
+   addition(b,c,d,e,f,g);
+   break;
+   case '2':
+   multi(b,c,d,e,f,g);
+   break;
+   case'3':
+   transpose(b,d,e);
+   break;
+   case '4':
+   saddle(b,d,e);
+}
+getch();
+}
